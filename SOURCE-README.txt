@@ -1,4 +1,4 @@
-﻿Codex 自动代理修复 v1.2.0 源码
+﻿Codex 自动代理修复 v1.2.1 源码
 
 构建
 使用 Windows PowerShell 5.1 执行 build.ps1。脚本调用 Windows 自带的 .NET Framework C# 编译器，不下载第三方包。

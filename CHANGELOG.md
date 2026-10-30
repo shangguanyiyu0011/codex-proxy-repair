@@ -1,5 +1,14 @@
 # 更新记录 / Changelog
 
+## v1.2.1
+
+- 创建撤销记录临时文件时显式设置当前用户归属和仅用户/SYSTEM 可写的权限，处理提升权限令牌默认文件所有者的环境差异；保留严格归属校验和 DPAPI 保护。
+- 补充隔离自检的失败诊断，Windows 工作流继续执行全部 EXE 与脚本自检，不跳过失败项。
+- 更新固定版本的 GitHub Actions 依赖，适配 Node.js 24 运行时。
+- 五种语言、界面、三个修复入口及诊断隐私范围保持一致。
+
+English: explicitly assign the current user as owner when atomically creating protected receipt files, preserving strict ownership checks in elevated environments. Add isolated-test diagnostics and update the pinned Windows CI actions.
+
 ## v1.2.0
 
 - 原生 .NET Framework WinForms 界面，提供独立 EXE 与 Windows PowerShell 5.1 完整源码备用入口。

@@ -1,4 +1,4 @@
-Codex Auto Proxy Repair v1.2.0
+﻿Codex Auto Proxy Repair v1.2.1
 Independent utility · Unsigned EXE + MIT-licensed script/source backup
 
 English

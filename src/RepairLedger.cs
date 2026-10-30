@@ -99,7 +99,12 @@ namespace CodexAutoProxyRepair {
    Validate(data);CheckOwned(directory,true);if(replace)CheckOwned(path,false);
    byte[] bytes=Protect(Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(data)),false);if(bytes.Length>MaxBytes)throw new IOException("撤销记录超出大小限制。");
    string temporary=Path.Combine(directory,".ledger-"+Guid.NewGuid().ToString("N")+".tmp");
-   try{using(var file=new FileStream(temporary,FileMode.CreateNew,FileAccess.Write,FileShare.None)){file.Write(bytes,0,bytes.Length);file.Flush(true);}CheckOwned(temporary,false);if(replace){CheckOwned(path,false);File.Replace(temporary,path,null);}else File.Move(temporary,path);}
+   // An elevated token can otherwise give new files the Administrators owner,
+   // even inside our user-owned directory. Apply owner and ACL at creation.
+   var security=new FileSecurity();security.SetOwner(owner);security.SetAccessRuleProtection(true,false);
+   security.AddAccessRule(new FileSystemAccessRule(owner,FileSystemRights.FullControl,AccessControlType.Allow));
+   security.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.LocalSystemSid,null),FileSystemRights.FullControl,AccessControlType.Allow));
+   try{using(var file=new FileStream(temporary,FileMode.CreateNew,FileSystemRights.Write,FileShare.None,4096,FileOptions.WriteThrough,security)){file.Write(bytes,0,bytes.Length);file.Flush(true);}CheckOwned(temporary,false);if(replace){CheckOwned(path,false);File.Replace(temporary,path,null);}else File.Move(temporary,path);}
    finally{try{if(File.Exists(temporary)&&(File.GetAttributes(temporary)&FileAttributes.ReparsePoint)==0)File.Delete(temporary);}catch{}}
   }
   internal Entry BeginAdd(string sid){
@@ -137,7 +142,7 @@ namespace CodexAutoProxyRepair {
     bool rejected=false;try{using(var ledger=new RepairLedger(root,"wrong-scope")){} }catch(IOException){rejected=true;}if(!rejected)throw new Exception();checks++;
     File.WriteAllText(Path.Combine(root,"store-repair-v1.dat"),"broken");rejected=false;try{using(var ledger=new RepairLedger(root,savedScope)){} }catch(IOException){rejected=true;}if(!rejected)throw new Exception();checks++;
     return checks==7?0:1;
-   }catch{return 1;}finally{try{if(Directory.Exists(root)&&(File.GetAttributes(root)&FileAttributes.ReparsePoint)==0)Directory.Delete(root,true);}catch{}}
+   }catch(Exception error){Console.Error.WriteLine("RepairLedger self-test failed after "+checks+" checks: "+error.GetType().Name+": "+error.Message);return 1;}finally{try{if(Directory.Exists(root)&&(File.GetAttributes(root)&FileAttributes.ReparsePoint)==0)Directory.Delete(root,true);}catch{}}
   }
  }
 }

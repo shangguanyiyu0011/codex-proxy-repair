@@ -1,4 +1,4 @@
-# Codex Auto Proxy Repair
+﻿# Codex Auto Proxy Repair
 
 A Windows utility for proxy inheritance issues affecting the official Store edition of Codex. It reads the current manual system proxy and provides separate **Codex reconnect, Dots connection, and update repair** actions, plus read-only scanning.
 
@@ -10,13 +10,13 @@ Intended for similar cases where a proxy is running and the browser works, but C
 
 ## Download
 
-**v1.2.0** · Windows 10/11 x64 · Windows PowerShell 5.1 and system .NET Framework.
+**v1.2.1** · Windows 10/11 x64 · Windows PowerShell 5.1 and system .NET Framework.
 
 | Download | Purpose |
 | --- | --- |
-| [Standalone EXE](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.0-windows.exe) | Recommended starting point |
-| [Portable package](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.0-windows-portable.zip) | EXE and documentation |
-| [Script and full source](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.0-script-source.zip) | Windows PowerShell 5.1 fallback and local build |
+| [Standalone EXE](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.1-windows.exe) | Recommended starting point |
+| [Portable package](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.1-windows-portable.zip) | EXE and documentation |
+| [Script and full source](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.1-script-source.zip) | Windows PowerShell 5.1 fallback and local build |
 | [SHA256SUMS.txt](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/SHA256SUMS.txt) | Download checksums |
 
 The EXE is unsigned and Windows may show an unknown-publisher prompt. No self-signed trust certificate is installed. Check the checksum and source, and follow your Windows or organization security policy.

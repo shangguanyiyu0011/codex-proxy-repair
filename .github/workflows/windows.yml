@@ -19,7 +19,7 @@ jobs:
         shell: powershell
     steps:
       - name: Check out source
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
       - name: Build native Windows application
@@ -28,12 +28,16 @@ jobs:
         run: |
           $taskApp = Get-ChildItem -LiteralPath build -Filter '*.exe' -File | Select-Object -First 1
           if (!$taskApp) { throw 'Build output missing.' }
-          $taskRun = Start-Process -FilePath $taskApp.FullName -ArgumentList '--self-test' -PassThru -Wait -WindowStyle Hidden
-          if ($taskRun.ExitCode -ne 0) { throw ('EXE self-tests failed: ' + $taskRun.ExitCode) }
+          $taskErrorLog = Join-Path $env:RUNNER_TEMP 'codex-selftest-error.txt'
+          $taskRun = Start-Process -FilePath $taskApp.FullName -ArgumentList '--self-test' -PassThru -Wait -WindowStyle Hidden -RedirectStandardError $taskErrorLog
+          if ($taskRun.ExitCode -ne 0) {
+            if (Test-Path -LiteralPath $taskErrorLog) { Get-Content -LiteralPath $taskErrorLog }
+            throw ('EXE self-tests failed: ' + $taskRun.ExitCode)
+          }
       - name: Run script edition self-tests
         run: ./Start-Repair.ps1 -Mode SelfTest
       - name: Keep unsigned build artifact
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: codex-proxy-repair-windows-unsigned
           path: build/*.exe

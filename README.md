@@ -1,4 +1,4 @@
-# Codex 自动代理修复
+﻿# Codex 自动代理修复
 
 面向 Windows 官方 Store 版 Codex 的代理连接辅助工具。自动读取当前手动系统代理，为 **Codex 重连、Dots 连接和更新修复** 提供三个独立入口，并通过只读扫描帮助判断下一步。
 
@@ -10,13 +10,13 @@
 
 ## 下载
 
-当前版本 **v1.2.0**。Windows 10/11 x64，使用 Windows PowerShell 5.1 和系统 .NET Framework。
+当前版本 **v1.2.1**。Windows 10/11 x64，使用 Windows PowerShell 5.1 和系统 .NET Framework。
 
 | 文件 | 用途 |
 | --- | --- |
-| [独立 EXE](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.0-windows.exe) | 直接打开，推荐入口 |
-| [便携完整包](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.0-windows-portable.zip) | EXE 与随附说明 |
-| [脚本与完整源码](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.0-script-source.zip) | Windows PowerShell 5.1 备用入口、本地构建 |
+| [独立 EXE](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.1-windows.exe) | 直接打开，推荐入口 |
+| [便携完整包](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.1-windows-portable.zip) | EXE 与随附说明 |
+| [脚本与完整源码](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/codex-proxy-repair-v1.2.1-script-source.zip) | Windows PowerShell 5.1 备用入口、本地构建 |
 | [SHA256SUMS.txt](https://github.com/shangguanyiyu0011/codex-proxy-repair/releases/latest/download/SHA256SUMS.txt) | 下载文件校验值 |
 
 EXE 尚无代码签名，Windows 可能显示未知发布者提示。未安装自签名信任证书；可先核对校验值与源码，并按 Windows 或组织的安全策略处理提示。
