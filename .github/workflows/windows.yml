@@ -1,0 +1,41 @@
+name: Windows build and self-tests
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: powershell
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Build native Windows application
+        run: ./build.ps1
+      - name: Run EXE self-tests
+        run: |
+          $taskApp = Get-ChildItem -LiteralPath build -Filter '*.exe' -File | Select-Object -First 1
+          if (!$taskApp) { throw 'Build output missing.' }
+          $taskRun = Start-Process -FilePath $taskApp.FullName -ArgumentList '--self-test' -PassThru -Wait -WindowStyle Hidden
+          if ($taskRun.ExitCode -ne 0) { throw ('EXE self-tests failed: ' + $taskRun.ExitCode) }
+      - name: Run script edition self-tests
+        run: ./Start-Repair.ps1 -Mode SelfTest
+      - name: Keep unsigned build artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: codex-proxy-repair-windows-unsigned
+          path: build/*.exe
+          if-no-files-found: error
+          retention-days: 14
